@@ -20,4 +20,19 @@ use ComBank\Transactions\Contracts\BankTransactionInterface;
 
 class BankAccount
 {
+    private $balance;
+    private $status;
+    private $overdraft;
+
+    public function reopenAccount(){
+        $this->status = true;
+    }
+
+    public function closeAccount(){
+        $this->status = false;
+    }
+
+    public function getBalance(){
+        return $this->balance;
+    }
     }
