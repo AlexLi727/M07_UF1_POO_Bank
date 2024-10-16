@@ -10,19 +10,32 @@
 use ComBank\Exceptions\BankAccountException;
 use ComBank\Exceptions\InvalidArgsException;
 use ComBank\Exceptions\ZeroAmountException;
+use ComBank\OverdraftStrategy\Contracts\OverdraftInterface;
 use ComBank\OverdraftStrategy\NoOverdraft;
 use ComBank\Bank\Contracts\BankAccountInterface;
 use ComBank\Exceptions\FailedTransactionException;
 use ComBank\Exceptions\InvalidOverdraftFundsException;
-use ComBank\OverdraftStrategy\Contracts\OverdraftInterface;
 use ComBank\Support\Traits\AmountValidationTrait;
 use ComBank\Transactions\Contracts\BankTransactionInterface;
 
-class BankAccount
+class BankAccount implements BankAccountInterface
 {
     private $balance;
     private $status;
     private $overdraft;
+
+    public function __construct($balance){
+        $this->balance = $balance;
+    }
+
+    public function transaction(BankTransactionInterface $transaction){
+        $newAmount = $transaction->applyTransaction($this);
+        $this->setBalance($newAmount);
+    }
+
+    public function openAccount():bool{
+        return $this-> status;
+    }
 
     public function reopenAccount(){
         $this->status = true;
@@ -32,7 +45,19 @@ class BankAccount
         $this->status = false;
     }
 
-    public function getBalance(){
+    public function getBalance():float{
         return $this->balance;
+    }
+
+    public function getOverdraft():OverdraftInterface{
+        return $this->overdraft;
+    }
+
+    public function applyOverdraft(OverdraftInterface $overdraft){
+
+    }
+
+    public function setBalance(float $amount){
+
     }
     }

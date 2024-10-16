@@ -19,7 +19,7 @@ require_once 'bootstrap.php';
 
 
 //---[Bank account 1]---/
-$bankAccount1 = new BankAccount(400, true, 0.01);
+$bankAccount1 = new BankAccount(400);
 pl('--------- [Start testing bank account #1, No overdraft] --------');
 try {
     $bankAccount1->getBalance();
@@ -29,7 +29,8 @@ try {
     $bankAccount1->reopenAccount();
 
 
-    // deposit +150 
+    // deposit +150
+    $bankAccount1->transaction(new BankTransactionInterface(amount: 150));
     pl('Doing transaction deposit (+150) with current balance ' . $bankAccount1->getBalance());
 
     pl('My new balance after deposit (+150) : ' . $bankAccount1->getBalance());

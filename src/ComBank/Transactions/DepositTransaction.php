@@ -10,8 +10,19 @@
 use ComBank\Bank\Contracts\BankAccountInterface;
 use ComBank\Transactions\Contracts\BankTransactionInterface;
 
-class DepositTransaction 
+class DepositTransaction implements BankTransactionInterface
 {
+    public function applyTransaction(BankAccountInterface $amount){
+        
+    }
+
+    public function getTransactionInfo():string{
+        return "smth";
+    }
+
+    public function getAmount():float{
+        return $this->getAmount();
+    }
 
 
    
