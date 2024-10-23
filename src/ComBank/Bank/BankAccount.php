@@ -58,6 +58,6 @@ class BankAccount implements BankAccountInterface
     }
 
     public function setBalance(float $amount){
-
+        $this->balance = $amount;
     }
     }

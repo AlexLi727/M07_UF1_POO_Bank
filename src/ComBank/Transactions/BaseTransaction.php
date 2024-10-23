@@ -13,5 +13,9 @@ use ComBank\Support\Traits\AmountValidationTrait;
 
 abstract class BaseTransaction
 {
-    
+    protected $amount;
+
+    public function __construct($amount){
+        $this->amount = $amount;
+    }
 }

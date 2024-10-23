@@ -30,13 +30,16 @@ try {
 
 
     // deposit +150
-    $bankAccount1->transaction(new BankTransactionInterface(amount: 150));
     pl('Doing transaction deposit (+150) with current balance ' . $bankAccount1->getBalance());
+
+    $bankAccount1->transaction(new DepositTransaction(150.0));
 
     pl('My new balance after deposit (+150) : ' . $bankAccount1->getBalance());
 
     // withdrawal -25
     pl('Doing transaction withdrawal (-25) with current balance ' . $bankAccount1->getBalance());
+
+    $bankAccount1->transaction(new WithdrawTransaction(25.0));
 
     pl('My new balance after withdrawal (-25) : ' . $bankAccount1->getBalance());
 
