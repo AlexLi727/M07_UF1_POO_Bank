@@ -46,6 +46,8 @@ try {
     // withdrawal -600
     pl('Doing transaction withdrawal (-600) with current balance ' . $bankAccount1->getBalance());
 
+    $bankAccount1->transaction(new WithdrawTransaction(600));
+
 } catch (ZeroAmountException $e) {
     pl($e->getMessage());
 } catch (BankAccountException $e) {

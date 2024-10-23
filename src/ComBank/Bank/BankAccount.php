@@ -24,8 +24,9 @@ class BankAccount implements BankAccountInterface
     private $status;
     private $overdraft;
 
-    public function __construct($balance){
+    public function __construct($balance, $overdraft){
         $this->balance = $balance;
+        $this->overdraft = $overdraft;
     }
 
     public function transaction(BankTransactionInterface $transaction){
@@ -54,7 +55,7 @@ class BankAccount implements BankAccountInterface
     }
 
     public function applyOverdraft(OverdraftInterface $overdraft){
-
+        $overdraft->isGrantOverdraftFunds($this->getBalance());
     }
 
     public function setBalance(float $amount){

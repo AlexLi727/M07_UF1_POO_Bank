@@ -15,7 +15,14 @@ class WithdrawTransaction extends BaseTransaction implements BankTransactionInte
 {
     public function applyTransaction(BankAccountInterface $account):float{
         $newBalance = $account->getBalance() - $this->amount;
-        return $newBalance;
+
+        if ($account->applyOverdraft($account->getOverdraft())) {
+            return $newBalance;
+        }
+        throw new InvalidOverdraftFundsException("Error Processing Request", 1);
+        
+
+
     }
 
     public function getTransactionInfo():string{
