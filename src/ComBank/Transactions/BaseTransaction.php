@@ -15,7 +15,12 @@ abstract class BaseTransaction
 {
     protected $amount;
 
+    use AmountValidationTrait;
+
     public function __construct($amount){
         $this->amount = $amount;
+        
+        $this->validateAmount($amount);
+        
     }
 }

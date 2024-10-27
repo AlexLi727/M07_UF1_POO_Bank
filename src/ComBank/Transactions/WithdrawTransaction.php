@@ -8,7 +8,10 @@
  */
 
 use ComBank\Bank\Contracts\BankAccountInterface;
+use ComBank\Exceptions\FailedTransactionException;
 use ComBank\Exceptions\InvalidOverdraftFundsException;
+use ComBank\OverdraftStrategy\NoOverdraft;
+use ComBank\OverdraftStrategy\SilverOverdraft;
 use ComBank\Transactions\Contracts\BankTransactionInterface;
 
 class WithdrawTransaction extends BaseTransaction implements BankTransactionInterface
@@ -16,17 +19,19 @@ class WithdrawTransaction extends BaseTransaction implements BankTransactionInte
     public function applyTransaction(BankAccountInterface $account):float{
         $newBalance = $account->getBalance() - $this->amount;
 
-        if ($account->applyOverdraft($account->getOverdraft())) {
+        if ($account->getOverdraft()->isGrantOverdraftFunds($newBalance)) {
             return $newBalance;
         }
-        throw new InvalidOverdraftFundsException("Error Processing Request", 1);
+        if($account->getOverdraft() == new NoOverdraft){
+            throw new InvalidOverdraftFundsException('Withdrawing below 0 is not allowed');
+        }else{
+            throw new FailedTransactionException("Withdrawing below -100 is not allowed");
+        }
         
-
-
     }
 
     public function getTransactionInfo():string{
-        return "smth";
+        return "WITHDRAW_TRANSACTION";
     }
 
     public function getAmount():float{
